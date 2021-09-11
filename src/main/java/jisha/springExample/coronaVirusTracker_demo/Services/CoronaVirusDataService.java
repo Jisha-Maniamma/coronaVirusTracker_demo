@@ -41,6 +41,7 @@ public class CoronaVirusDataService {
 
         for (CSVRecord record : records) {
             LocationStats lStats=new LocationStats();
+          //  lStats.setState();
 
             String state = record.get("Province/State");
             String Country = record.get("Country/Region");
