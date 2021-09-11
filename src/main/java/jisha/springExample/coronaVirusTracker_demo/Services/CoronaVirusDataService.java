@@ -45,15 +45,17 @@ public class CoronaVirusDataService {
 
             String state = record.get("Province/State");
             String Country = record.get("Country/Region");
-            String TotalCases=record.get("");
+            String TotalCases=record.get(record.size()-1);
             lStats.setState(state);
+
             lStats.setCountry(Country);
             lStats.setTotalCases(Long.valueOf(TotalCases));
            // String
-            System.out.println(state+"   "+Country);
-
+            System.out.println(lStats);
+            newStats.add(lStats);
 //            String name = record.get("Name");
         }
+        allStats=newStats;
 
     }
 }
