@@ -16,6 +16,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -28,7 +29,7 @@ public class CoronaVirusDataService {
     @PostConstruct
     @Scheduled(cron = "* * * * * *")
     public void fetchVirusData() throws IOException, InterruptedException {
-
+        List<LocationStats> newStats=new ArrayList<>();
         HttpClient client=HttpClient.newHttpClient();
         HttpRequest  request=HttpRequest.newBuilder().uri(URI.create(DATA_SOURCE)).build();
 
@@ -37,9 +38,13 @@ public class CoronaVirusDataService {
 
         StringReader csvBodyReader=new StringReader(httpResponse.body());
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
+
         for (CSVRecord record : records) {
+            LocationStats lStats=new LocationStats();
+
             String state = record.get("Province/State");
             String Country = record.get("Country/Region");
+           // String
             System.out.println(state+"   "+Country);
 
 //            String name = record.get("Name");
