@@ -4,6 +4,7 @@ package jisha.springExample.coronaVirusTracker_demo.Services;
 import lombok.Setter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -19,6 +20,7 @@ public class CoronaVirusDataService {
     public static String DATA_SOURCE="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv";
 
     @PostConstruct
+    @Scheduled(cron = "* * * * * *")
     public void fetchVirusData() throws IOException, InterruptedException {
 
         HttpClient client=HttpClient.newHttpClient();
