@@ -13,6 +13,7 @@ public class LocationStats {
     private String state;
     private String country;
     private long totalCases;
+    private long DifferenceFromPreviousDay;
 //
 //    public String getState() {
 //        return state;

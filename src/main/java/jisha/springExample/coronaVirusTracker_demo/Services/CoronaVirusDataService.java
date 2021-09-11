@@ -2,6 +2,7 @@ package jisha.springExample.coronaVirusTracker_demo.Services;
 
 
 import jisha.springExample.coronaVirusTracker_demo.Model.LocationStats;
+import lombok.Data;
 import lombok.Setter;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -18,7 +19,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-
+@Data
 @Service
 public class CoronaVirusDataService {
     @Setter
@@ -27,7 +28,7 @@ public class CoronaVirusDataService {
     @Autowired
     private List<LocationStats> allStats;
     @PostConstruct
-    @Scheduled(cron = "* * 1 * * *")
+    @Scheduled(cron = "* * * * * *")
     public void fetchVirusData() throws IOException, InterruptedException {
         List<LocationStats> newStats=new ArrayList<>();
         HttpClient client=HttpClient.newHttpClient();
@@ -46,12 +47,17 @@ public class CoronaVirusDataService {
             String state = record.get("Province/State");
             String Country = record.get("Country/Region");
             String TotalCases=record.get(record.size()-1);
+            String PreviousTotalCases=record.get(record.size()-2);
             lStats.setState(state);
 
             lStats.setCountry(Country);
-            lStats.setTotalCases(Long.valueOf(TotalCases));
+            long latestCases=Long.valueOf(TotalCases);
+            long PreviousTotalCases1=Long.valueOf(PreviousTotalCases);
+            lStats.setDifferenceFromPreviousDay(latestCases-PreviousTotalCases1);
+            lStats.setTotalCases(latestCases);
+
            // String
-            System.out.println(lStats);
+          //  System.out.println(lStats);
             newStats.add(lStats);
 //            String name = record.get("Name");
         }
