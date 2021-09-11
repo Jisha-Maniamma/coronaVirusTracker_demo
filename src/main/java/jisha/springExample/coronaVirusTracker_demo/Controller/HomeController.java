@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/home/Covid19/Tracker")
 public class HomeController {
 
-@GetMapping("HomePage")
+@GetMapping("/HomePage")
     public String Home(){
         return "Home";
     }
