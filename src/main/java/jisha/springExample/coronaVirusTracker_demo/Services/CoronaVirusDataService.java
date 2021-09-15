@@ -35,7 +35,7 @@ public class CoronaVirusDataService {
         HttpRequest  request=HttpRequest.newBuilder().uri(URI.create(DATA_SOURCE)).build();
 
         HttpResponse<String> httpResponse=client.send(request, HttpResponse.BodyHandlers.ofString());
-        //System.out.println(httpResponse.body());
+        System.out.println(httpResponse.body());
 
         StringReader csvBodyReader=new StringReader(httpResponse.body());
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
@@ -57,7 +57,7 @@ public class CoronaVirusDataService {
             lStats.setTotalCases(latestCases);
 
            // String
-          //  System.out.println(lStats);
+            System.out.println(lStats);
             newStats.add(lStats);
 //            String name = record.get("Name");
         }
